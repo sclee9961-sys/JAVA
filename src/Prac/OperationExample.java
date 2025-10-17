@@ -1,4 +1,4 @@
-package Exam;
+package Prac;
 
 public class OperationExample {
     public static void main(String[] args){

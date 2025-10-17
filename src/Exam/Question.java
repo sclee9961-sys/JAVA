@@ -1,4 +1,4 @@
-package Prac;
+package Exam;
 
 import java.util.Scanner;
 
