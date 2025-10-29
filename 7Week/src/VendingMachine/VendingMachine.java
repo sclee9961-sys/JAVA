@@ -147,6 +147,9 @@ public class VendingMachine {
         myVendingMachine.addDrink(sprite);
         myVendingMachine.addDrink(water);
         myVendingMachine.addDrink(juice);
+        
+        Scanner scanner = new Scanner(System.in);
+        String input = "";
 
         Scanner scanner = new Scanner(System.in);
         String input = "";
