@@ -137,6 +137,7 @@ public class VendingMachine {
     // ===================== 실행 메인 =====================
     public static void main(String[] args) {
         VendingMachine myVendingMachine = new VendingMachine();
+        System.out.println("--- 자판기 시뮬레이션 시작 ---\n");
 
         Drink coke = new Drink("콜라", 1200, 5, LocalDate.of(2025, 11, 1));
         Drink sprite = new Drink("사이다", 1200, 3, LocalDate.of(2025, 11, 5));
@@ -151,41 +152,51 @@ public class VendingMachine {
         Scanner scanner = new Scanner(System.in);
         String input = "";
 
-        Scanner scanner = new Scanner(System.in);
-        String input = "";
 
         System.out.println("--- 자판기 시뮬레이션 시작 ---\n");
 
         while (!input.equalsIgnoreCase("종료")) {
+            // 현재 메뉴 및 잔액 표시
             myVendingMachine.displayInventory();
-            System.out.println("명령어를 입력하세요:");
-            System.out.println("1.<금액> - 돈 투입 (예: 1.1000)");
-            System.out.println("2.<음료명> - 음료 선택 (예: 2.콜라)");
-            System.out.println("3 - 잔돈 반환");
-            System.out.println("종료 - 프로그램 종료");
-            System.out.print("> ");
 
-            input = scanner.nextLine();
+            System.out.println("---------------------------------");
+            System.out.println("1. 돈 투입 (금액 입력) | 2. 음료 선택 (이름 입력) | 3. 잔돈 반환 (반환 입력) | 4. 종료");
+            System.out.print("명령을 입력하세요: ");
+            input = scanner.nextLine().trim();
 
-            if (input.startsWith("1.")) { // 돈 투입
-                String amountStr = input.substring(2).trim();
-                int amount = Integer.parseInt(amountStr);
-                myVendingMachine.insertCoin(amount);
-
-            } else if (input.startsWith("2.")) { // 음료 선택
-                String drinkName = input.substring(2).trim();
-                myVendingMachine.selectDrink(drinkName);
-
-            } else if (input.equalsIgnoreCase("3.") || input.equalsIgnoreCase("3")) {
-                myVendingMachine.returnChange();
-
-            } else if (!input.equalsIgnoreCase("종료")) {
-                System.out.println("올바른 명령어를 입력하세요.");
+            if (input.equalsIgnoreCase("종료")) {
+                break;
             }
-            System.out.println();
+
+            try {
+                if (input.startsWith("1.")) { // 돈 투입
+                    // 입력에서 '1.'을 제거하고 금액만 추출
+                    String amountStr = input.substring(2).trim();
+                    int amount = Integer.parseInt(amountStr);
+                    myVendingMachine.insertCoin(amount);
+
+                } else if (input.startsWith("2.")) { // 음료 선택
+                    String drinkName = input.substring(2).trim();
+                    myVendingMachine.selectDrink(drinkName);
+
+                } else if (input.equalsIgnoreCase("3.") || input.equalsIgnoreCase("반환")) { // 잔돈 반환
+                    myVendingMachine.returnChange();
+
+                } else {
+                    System.out.println("잘못된 명령 형식입니다. '1.1000' 또는 '2.콜라' 형식으로 입력해주세요.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("금액은 숫자로만 입력해야 합니다.");
+            }
+        }
+
+// 종료 시 남은 잔돈 반환
+        if (myVendingMachine.currentBalance > 0) {
+            myVendingMachine.returnChange();
         }
 
         scanner.close();
-        System.out.println("--- 시뮬레이션 종료 ---");
+        System.out.println("\n--- 시뮬레이션 종료 ---");
+
     }
 }
