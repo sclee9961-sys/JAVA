@@ -1,7 +1,7 @@
 package VendingMachine;
+import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 import java.time.LocalDate;
 import java.util.Comparator;
 
@@ -147,6 +147,9 @@ public class VendingMachine {
         myVendingMachine.addDrink(sprite);
         myVendingMachine.addDrink(water);
         myVendingMachine.addDrink(juice);
+        
+        Scanner scanner = new Scanner(System.in);
+        String input = "";
 
         System.out.println("--- 자판기 시뮬레이션 시작 ---\n");
 
