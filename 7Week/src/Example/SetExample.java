@@ -1,3 +1,5 @@
+package Example;
+
 import java.util.*;
 
 public class SetExample {
