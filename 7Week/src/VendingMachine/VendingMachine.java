@@ -1,7 +1,7 @@
 package VendingMachine;
+import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 import java.time.LocalDate;
 import java.util.Comparator;
 
@@ -148,19 +148,41 @@ public class VendingMachine {
         myVendingMachine.addDrink(water);
         myVendingMachine.addDrink(juice);
 
+        Scanner scanner = new Scanner(System.in);
+        String input = "";
+
         System.out.println("--- 자판기 시뮬레이션 시작 ---\n");
 
-        myVendingMachine.displayInventory();
-        myVendingMachine.insertCoin(1000);
-        myVendingMachine.insertCoin(500); // 현재 잔액: 1500원
-        myVendingMachine.selectDrink("콜라"); // 가장 오래된 유통기한 콜라가 나옴
-        myVendingMachine.selectDrink("오렌지주스");
-        myVendingMachine.selectDrink("사이다");
-        myVendingMachine.insertCoin(1000);
-        myVendingMachine.selectDrink("사이다");
-        myVendingMachine.returnChange();
+        while (!input.equalsIgnoreCase("종료")) {
+            myVendingMachine.displayInventory();
+            System.out.println("명령어를 입력하세요:");
+            System.out.println("1.<금액> - 돈 투입 (예: 1.1000)");
+            System.out.println("2.<음료명> - 음료 선택 (예: 2.콜라)");
+            System.out.println("3 - 잔돈 반환");
+            System.out.println("종료 - 프로그램 종료");
+            System.out.print("> ");
 
-        myVendingMachine.displayInventory();
+            input = scanner.nextLine();
+
+            if (input.startsWith("1.")) { // 돈 투입
+                String amountStr = input.substring(2).trim();
+                int amount = Integer.parseInt(amountStr);
+                myVendingMachine.insertCoin(amount);
+
+            } else if (input.startsWith("2.")) { // 음료 선택
+                String drinkName = input.substring(2).trim();
+                myVendingMachine.selectDrink(drinkName);
+
+            } else if (input.equalsIgnoreCase("3.") || input.equalsIgnoreCase("3")) {
+                myVendingMachine.returnChange();
+
+            } else if (!input.equalsIgnoreCase("종료")) {
+                System.out.println("올바른 명령어를 입력하세요.");
+            }
+            System.out.println();
+        }
+
+        scanner.close();
         System.out.println("--- 시뮬레이션 종료 ---");
     }
 }
